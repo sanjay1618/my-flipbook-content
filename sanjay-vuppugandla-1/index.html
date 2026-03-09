@@ -1,0 +1,87 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Flipbook Viewer</title>
+      <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+      <style>
+          body { 
+              background-color: #1a1a1a; 
+              margin: 0; 
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+              height: 100vh; 
+              overflow: hidden;
+              font-family: sans-serif;
+          }
+          #book-container { 
+              width: 90vw; 
+              height: 90vh; 
+              display: flex; 
+              justify-content: center; 
+              align-items: center; 
+          }
+          /* The element that becomes the book */
+          #my-book { 
+              box-shadow: 0 0 50px rgba(0,0,0,0.8); 
+          }
+          .page-info {
+              position: absolute;
+              bottom: 20px;
+              color: white;
+              background: rgba(0,0,0,0.5);
+              padding: 5px 15px;
+              border-radius: 20px;
+          }
+      </style>
+  </head>
+  <body>
+  
+      <div id="book-container">
+          <div id="my-book"></div>
+      </div>
+  
+      <div class="page-info">
+          <span id="page-current">1</span> / <span>1</span>
+      </div>
+  
+      <script>
+          const { PageFlip } = St;
+          const pageCount = 1;
+          
+          // 1. Generate the array of image paths
+          // We assume the images are in a folder named 'pages' relative to this file
+          const images = [];
+          for (let i = 1; i <= pageCount; i++) {
+              images.push(`./pages/${i}.jpg`);
+          }
+  
+          // 2. Initialize the PageFlip object
+          const container = document.getElementById('my-book');
+          const pageFlip = new PageFlip(container, {
+              width: 550, 
+              height: 733,
+              size: "stretch",
+              minWidth: 315,
+              maxWidth: 1000,
+              minHeight: 420,
+              maxHeight: 1350,
+              maxShadowOpacity: 0.5,
+              showCover: true,
+              mobileScrollSupport: false
+          });
+  
+          // 3. Load the images
+          pageFlip.loadFromImages(images);
+  
+          // 4. Update the page counter UI
+          pageFlip.on('flip', (e) => {
+              document.getElementById('page-current').innerText = e.data + 1;
+          });
+      </script>
+  </body>
+  </html>
+    
